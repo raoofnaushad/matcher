@@ -1,0 +1,15 @@
+name: matchmaker
+channels: 
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - seaborn==0.12.2
+    - scipy==1.11.2
+    - matplotlib==3.7.1
+    - sklearn==0.0.post9
+    - umap-learn==0.5.4
+    - sentence-transformers==2.2.2
+    - black
+  
