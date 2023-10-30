@@ -1,4 +1,4 @@
-# Embedding Matchmaking
+# Matchmaking with Embedding Vectors
 
 _"Words can't describe how unique your interests are... but coordinates can" - Sean Ashley, circa 2023_
 
@@ -19,3 +19,9 @@ A flattened embedding space of names clustered based on their interests using th
 3. Replace `attendees.csv` in `visualizer.ipynb` with the path to your downloaded data
 4. Run all cells
 5. Bask in the glory of having an awesome new poster
+
+
+## Step - 1: Setting up the environment
+
+- Prerequisite: Install anaconda or miniconda (Or you can create the environment using python virtualenv use the packages mentioned in the environment.yml file)
+- 
