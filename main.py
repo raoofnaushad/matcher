@@ -13,33 +13,43 @@ class MatchMaker:
         self.mapped_data = dict()
         # self.model = SentenceTransformer(self.model_src)
         
-    def get_mapped_data(self):
+        
+    def data(self):
+        """
+            This function will deal with reading data from source, preprocessing etc.
+        """
+        ## Reading Data
         self.mapped_data = U.read_data_from_csv(self.data_src)
-
-    def modelling(self):
+        ## Preprocessing Data
+        ## So and So
+        
+    def embedding(self):
+        ## Model
         self.model = SentenceTransformer(self.model_src)
-        
-    def create_embeddings(self):
+        ## creating embeddings
         self.mapped_embeddings = U.create_embeddings(self.model, self.mapped_data)
+        ## Scaling embeddings
+        self.embeddings = U.scale_data(self.mapped_embeddings)        
         
-    def preprocessing(self):
-        self.embeddings = U.scale_data(self.mapped_embeddings)
-
+        
     def dimensionality_reduction(self):
+        ## dimensionality reduction
         self.dim_reduced_embeddings = U.dimensionality_reduction(self.embeddings)
-    
-    def create_visualization(self):
-        U.plot_and_save_visualization(self.mapped_embeddings, self.dim_reduced_embeddings)
+        
+        
+    def visualization(self):
+        ## Plotting the plot
+        ## Saving the plot
+        U.plot_and_save_visualization(self.mapped_embeddings, self.dim_reduced_embeddings)    
+
         
 
 if __name__ == "__main__":
     MM = MatchMaker(C.DATA_PATH, C.MODEL_PATH)
-    MM.get_mapped_data()
-    MM.modelling()
-    MM.create_embeddings()
-    MM.preprocessing()
+    MM.data()
+    MM.embedding()
     MM.dimensionality_reduction()
-    MM.create_visualization()
-    # print(MM.dim_reduced_embeddings)
+    MM.visualization()
+
     
     
