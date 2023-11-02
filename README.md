@@ -6,22 +6,16 @@ A flattened embedding space of names clustered based on their interests using th
 
 ![Sample output of script](https://github.com/raoofnaushad/matcher/blob/main/visualization.png?raw=true)
 
-## Instructions for use
 
-1. Collect or format your data in the following format
+## Understanding Embeddings? 
 
-| Name  | What are your interests? (or varying permutations of this question) |
-| ----- | ------------------------------------------------------------------- |
-| Alice | I love being the universal placeholder for every CS joke ever       |
-| Bob   | I too love being the universal placeholder for every CS joke        |
+Embeddings act as a form of translation for computers, equipping them with the ability to decipher the underlying meaning of language. In this process, each word is assigned a unique numerical vector, essentially serving as a distinct identifier for that word. These vectors are meticulously designed to ensure that words with similar meanings have vectors with similarities. Consequently, words like "apple" and "fruit" would be situated closer in this vector space, denoting their related meanings.
 
-2. Clone the repository
-3. Replace `attendees.csv` in `visualizer.ipynb` with the path to your downloaded data
-4. Run all cells
-5. Bask in the glory of having an awesome new poster
+### Sentence Embeddings
 
+Furthermore, the concept of embeddings extends to entire sentences. Sentence embeddings encapsulate the essence of a sentence within a numerical vector. This allows a computer to comprehend the overall meaning of a sentence, even within complex contexts. The capacity to represent words and sentences as numerical vectors empowers computers to execute various language-related tasks, ranging from translation to sentiment analysis. These vectors can be effectively compared and manipulated, enabling computers to make sense of language in a highly efficient manner.
 
-## Step - 1: Setting up the environment
+### Visualizing Embeddings
 
-- Prerequisite: Install anaconda or miniconda (Or you can create the environment using python virtualenv use the packages mentioned in the environment.yml file)
-- 
+As illustrated in the image above, which is generated from the classmates.csv file containing people's names and their hobbies, visualizing embeddings in a 2D space unveils a compelling pattern. Individuals with similar interests or hobbies are clustered closely together. It's akin to crafting a map of language that allows computers to navigate and understand the relationships between words and sentences. These embeddings act as a bridge that translates language into a code that computers can comprehend, making them invaluable tools in the realm of natural language processing.
+
