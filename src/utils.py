@@ -1,8 +1,11 @@
 from src import config as C
 
 import csv
+import os
+import numpy as np
 from sklearn.preprocessing import StandardScaler
 import umap.umap_ as umap
+from scipy.spatial.distance import cosine
 
 import matplotlib.pyplot as plt
 
@@ -48,19 +51,39 @@ def dimensionality_reduction(embeddings):
     reduced_data = reducer.fit_transform(embeddings)
     return reduced_data
 
-def plot_and_save_visualization(embeddings, reduced_embeddings):
+def plot_and_save_visualization(embeddings, reduced_embeddings, plot_path = 'visualization.png'):
     # Creating lists of coordinates with accompanying labels
     x = [row[0] for row in reduced_embeddings]
     y = [row[1] for row in reduced_embeddings]
     label = list(embeddings.keys())
 
-    # Plotting and annotating data points
+    # Plotting and annotating data points   
     plt.scatter(x,y)
     for i, name in enumerate(label):
         plt.annotate(name, (x[i], y[i]), fontsize="3")
 
     # Clean-up and Export
     plt.axis('off')
-    plt.savefig('visualization.png', dpi=800)
+    plt.savefig(os.path.join(C.BASE_RESULTS_PATH , plot_path), dpi=800)
     
     return None
+
+
+
+# Create a function to be called while serializing JSON
+def json_serialize(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    return obj
+
+
+def compare_embedding(str1: str, str2: str) -> float:
+    """
+    Given two strings, compare their embeddings' cosine similarity.
+    """
+    model = SentenceTransformer(m.MINILM_L6_V2)
+    embedding_1 = model.encode(str1)
+    embedding_2 = model.encode(str2)
+
+    cosine_similarity = 1 - cosine(embedding_1, embedding_2)
+    return cosine_similarity
