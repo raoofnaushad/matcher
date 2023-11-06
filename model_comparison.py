@@ -7,6 +7,7 @@ import os
 import json
 
 
+
 class MatchMaker:
     """_summary_
     """
@@ -35,7 +36,7 @@ class MatchMaker:
         self.embeddings = U.scale_data(self.mapped_embeddings)    
         ## Save embeddings
         print(type(self.mapped_embeddings))
-        with open(C.PERSON_EMBEDDINGS_PATH, 'w') as f:
+        with open(C.MOD_MODEL_EMBEDDINGS_PATH, 'w') as f:
             json.dump(self.mapped_embeddings, f, default=U.json_serialize)
         
         
@@ -52,7 +53,7 @@ class MatchMaker:
         
 
 if __name__ == "__main__":
-    MM = MatchMaker(C.CLASSMATES_DATA_PATH, C.MINI_MODEL_PATH)
+    MM = MatchMaker(C.CLASSMATES_DATA_PATH, C.MPNET_MODEL_PATH)
     MM.data()
     MM.embedding()
     MM.dimensionality_reduction()
