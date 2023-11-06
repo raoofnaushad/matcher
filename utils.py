@@ -1,13 +1,15 @@
-from src import config as C
 
 import csv
-import os
+import json
+
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 import umap.umap_ as umap
-from scipy.spatial.distance import cosine
-
 import matplotlib.pyplot as plt
+
+import config as C
+
+
 
 def read_data_from_csv(data_path : str) -> dict:
     """
@@ -31,24 +33,46 @@ def read_data_from_csv(data_path : str) -> dict:
     return attendees_map
 
 
-def create_embeddings(model, attendees_map):
+def json_serialize(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    return obj
+
+
+def create_embeddings(model, attendees_map, embeddings_path, scale_data=True, save_embeddings=True):
+
     paragraphs = list(attendees_map.keys())
     embeddings = model.encode(paragraphs)
         
     # Create a dictionary to store embeddings for each person
     person_embeddings = {attendees_map[paragraph]: embedding for paragraph, embedding in zip(paragraphs, embeddings)}
     
-    return person_embeddings
+    if scale_data:
+        scaler = StandardScaler()
+        scaled_embeddings = scaler.fit_transform(list(person_embeddings.values()))    
+        
+            
+    if save_embeddings:
+        with open(embeddings_path, 'w') as f:
+            json.dump(person_embeddings, f, default=json_serialize)    
+    
+    return person_embeddings, scaled_embeddings
 
-def scale_data(embeddings):
-    scaler = StandardScaler()
-    scaled_data = scaler.fit_transform(list(embeddings.values()))
-    return scaled_data
+
+def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embeddings_path, save_embeddings=True):
+    if dim_red_method == 'UMAP':
+        reducer = umap.UMAP(random_state=C.RANDOM_STATE)
+        reduced_data = reducer.fit_transform(embeddings)
+
+    pupils = list(mapped_embeddings.keys())
+    # Create a dictionary to store embeddings for each person
+    person_red_embeddings = {user: embedding for user, embedding in zip(pupils, reduced_data)}
     
+
+    if save_embeddings:
+        with open(embeddings_path.split('.')[0] + '_dim_red.json', 'w') as f:
+            json.dump(person_red_embeddings, f, default=json_serialize)    
     
-def dimensionality_reduction(embeddings):
-    reducer = umap.UMAP(random_state=C.RANDOM_STATE)
-    reduced_data = reducer.fit_transform(embeddings)
     return reduced_data
 
 def plot_and_save_visualization(embeddings, reduced_embeddings, plot_path = 'visualization.png'):
@@ -64,26 +88,6 @@ def plot_and_save_visualization(embeddings, reduced_embeddings, plot_path = 'vis
 
     # Clean-up and Export
     plt.axis('off')
-    plt.savefig(os.path.join(C.BASE_RESULTS_PATH , plot_path), dpi=800)
+    # plt.show()
+    plt.savefig(plot_path, dpi=800)
     
-    return None
-
-
-
-# Create a function to be called while serializing JSON
-def json_serialize(obj):
-    if isinstance(obj, np.ndarray):
-        return obj.tolist()
-    return obj
-
-
-def compare_embedding(str1: str, str2: str) -> float:
-    """
-    Given two strings, compare their embeddings' cosine similarity.
-    """
-    model = SentenceTransformer(m.MINILM_L6_V2)
-    embedding_1 = model.encode(str1)
-    embedding_2 = model.encode(str2)
-
-    cosine_similarity = 1 - cosine(embedding_1, embedding_2)
-    return cosine_similarity

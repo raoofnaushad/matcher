@@ -12,4 +12,5 @@ dependencies:
     - umap-learn==0.5.4
     - sentence-transformers==2.2.2
     - black
+    - optuna
   
