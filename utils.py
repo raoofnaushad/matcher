@@ -59,9 +59,14 @@ def create_embeddings(model, attendees_map, embeddings_path, scale_data=True, sa
     return person_embeddings, scaled_embeddings
 
 
-def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embeddings_path, save_embeddings=True):
+def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embeddings_path, n_components, save_embeddings=True):
     if dim_red_method == 'UMAP':
-        reducer = umap.UMAP(random_state=C.RANDOM_STATE)
+        
+        reducer = umap.UMAP(n_neighbors = 15
+                            ,n_components = n_components
+                            ,metric='euclidean'
+                            ,transform_seed = C.RANDOM_STATE
+                            ,random_state=C.RANDOM_STATE)
         reduced_data = reducer.fit_transform(embeddings)
 
     pupils = list(mapped_embeddings.keys())
@@ -75,7 +80,7 @@ def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embe
     
     return reduced_data
 
-def plot_and_save_visualization(embeddings, reduced_embeddings, plot_path = 'visualization.png'):
+def plot_and_save_visualization(embeddings, reduced_embeddings, plot_title, plot_path = 'visualization.png'):
     # Creating lists of coordinates with accompanying labels
     x = [row[0] for row in reduced_embeddings]
     y = [row[1] for row in reduced_embeddings]
@@ -87,7 +92,8 @@ def plot_and_save_visualization(embeddings, reduced_embeddings, plot_path = 'vis
         plt.annotate(name, (x[i], y[i]), fontsize="3")
 
     # Clean-up and Export
-    plt.axis('off')
+    plt.axis('on')
+    plt.title(plot_title)
     # plt.show()
     plt.savefig(plot_path, dpi=800)
     
