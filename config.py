@@ -1,12 +1,20 @@
 import os
 
+import warnings
+warnings.simplefilter("ignore")
+
 RANDOM_STATE = 42
 
-MINI_MODEL_PATH = 'sentence-transformers/all-MiniLM-L6-v2'
-MPNET_MODEL_PATH = 'sentence-transformers/all-mpnet-base-v2'
+MINILM_L6_V2 = 'sentence-transformers/all-MiniLM-L6-v2'
+MPNET_BASE_V2 = 'sentence-transformers/all-mpnet-base-v2'
 
 BASE_DATA_PATH = 'data'
-BASE_RESULTS_PATH = 'analysis'
+BASE_RESULTS_PATH = 'results'
+
+
+
+
+
 MOD_PLOT_PATH = 'mod_visualization.png'
 CLASSMATES_DATA_PATH = os.path.join(BASE_DATA_PATH, 'classmates.csv')
 CLASSMATES_MOD_DATA_PATH = os.path.join(BASE_DATA_PATH, 'classmates_modified.csv')

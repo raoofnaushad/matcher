@@ -7,7 +7,7 @@ A flattened embedding space of names clustered based on their interests using th
 ![Sample output of script](https://github.com/raoofnaushad/matcher/blob/main/visualization.png?raw=true)
 
 
-## Understanding Embeddings? 
+## What are Embeddings? 
 
 Embeddings act as a form of translation for computers, equipping them with the ability to decipher the underlying meaning of language. In this process, each word is assigned a unique numerical vector, essentially serving as a distinct identifier for that word. These vectors are meticulously designed to ensure that words with similar meanings have vectors with similarities. Consequently, words like "apple" and "fruit" would be situated closer in this vector space, denoting their related meanings.
 
@@ -18,4 +18,3 @@ Furthermore, the concept of embeddings extends to entire sentences. Sentence emb
 ### Visualizing Embeddings
 
 As illustrated in the image above, which is generated from the classmates.csv file containing people's names and their hobbies, visualizing embeddings in a 2D space unveils a compelling pattern. Individuals with similar interests or hobbies are clustered closely together. It's akin to crafting a map of language that allows computers to navigate and understand the relationships between words and sentences. These embeddings act as a bridge that translates language into a code that computers can comprehend, making them invaluable tools in the realm of natural language processing.
-
