@@ -20,7 +20,8 @@ class MatchMaker:
                 dim_components = 3,
                 plot_title = "Embeddings Plot",
                 plot_path = 'visualization.png',
-                candidate = ''):
+                candidate = '',
+                random_state = True):
         
         self._type = _type
         self.data_src = os.path.join(C.BASE_DATA_PATH, file_name)
@@ -30,6 +31,7 @@ class MatchMaker:
         self.plot_title = plot_title
         self.plot_path = os.path.join(C.BASE_RESULTS_PATH, plot_path)
         self.candidate = candidate
+        self.random_state = random_state
         
         self.model = SentenceTransformer(self.model_src)
         self.mapped_data = U.read_data_from_csv(self.data_src)
@@ -45,7 +47,7 @@ class MatchMaker:
 
         
         print(f"Dimensionality reduction using {self.dim_reduction_method}")
-        self.dim_reduced_embeddings = U.dimensionality_reduction(self.mapped_embeddings, self.embeddings, self.dim_reduction_method, self.embeddings_path, self.dim_components, save_embeddings=True)
+        self.dim_reduced_embeddings = U.dimensionality_reduction(self.mapped_embeddings, self.embeddings, self.dim_reduction_method, self.embeddings_path, self.dim_components, save_embeddings=True, random_state = self.random_state)
         print(f"Dimensionality reduction completed successfully using {self.dim_reduction_method}")
         print(f"Reduced Embeddings Dimension is: {len(self.dim_reduced_embeddings[0])}")
         print("-----"*10)
@@ -82,7 +84,8 @@ if __name__ == "__main__":
     #                 dim_reduction_method = 'UMAP',
     #                 dim_components = 2,
     #                 plot_title = "MCDA Classmates Embeddings",
-    #                 plot_path = 'person_embeddings.png')
+    #                 plot_path = 'person_embeddings.png',
+    #                 random_state = True)
  
     #  ## Run It!!!
     # MM.run()   
@@ -101,9 +104,20 @@ if __name__ == "__main__":
     # ## Run It!!!
     # MM.run()
     
-    ## 3. Embedding Sensitivity Tests - Compares the embedding produced by multiple models
-    model_comparison.compare_models(C.CLASSMATES_DATA_PATH, C.MINILM_L6_V2, C.MPNET_BASE_V2, "Greg Kirczenow", "model_comparison.png")
+    # ## 3. Embedding Sensitivity Tests - Compares the embedding produced by multiple models
+    # model_comparison.compare_models(C.CLASSMATES_DATA_PATH, C.MINILM_L6_V2, C.MPNET_BASE_V2, "Greg Kirczenow", "model_comparison.png")
 
 
-    
-    
+    ## 4. Generate and Visualize ClassMates Data with no seed
+    MM = MatchMaker(_type = 'generate', 
+                    file_name = 'classmates.csv', 
+                    model = C.MINILM_L6_V2, 
+                    embeddings_path = 'person_embeddings.json',
+                    dim_reduction_method = 'UMAP',
+                    dim_components = 2,
+                    plot_title = "MCDA Classmates Embeddings",
+                    plot_path = 'person_embeddings.png',
+                    random_state = False)
+ 
+     ## Run It!!!
+    MM.run()   

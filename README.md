@@ -19,7 +19,6 @@ The Model package used in this project is obtained from the Python package calle
 SentenceTransformers is a Python framework that implements state-of-the-art techniques for generating embeddings for sentences, text, and images. The initial work on this framework is described in the paper "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks."
 
 
-
 ## What are Embeddings? 
 
 Embeddings act as a form of translation for computers, equipping them with the ability to decipher the underlying meaning of language. In this process, each word is assigned a unique numerical vector, essentially serving as a distinct identifier for that word. These vectors are meticulously designed to ensure that words with similar meanings have vectors with similarities. Consequently, words like "apple" and "fruit" would be situated closer in this vector space, denoting their related meanings.
@@ -75,4 +74,12 @@ To exemplify this sensitivity, let's take an illustrative case. With the first m
 
 
 
+## Effect of RandomSeed on UMAP:
 
+![Image 1](https://github.com/raoofnaushad/matcher/blob/main/results/withoutseed1.png?raw=true)
+
+<br>
+
+![Image 2](https://github.com/raoofnaushad/matcher/blob/main/results/withoutseed2.png?raw=true)
+
+When changing the seed for the UMAP function and rerunning the code, you'll notice variations in the generated visualization (visualization.png). These differences stem from the random weight initialization in the UMAP algorithm. However, despite the visual discrepancies, the relative relationships between vectors remain consistent. For example, individuals like Akash, Mehul, and Francis maintain their proximity in both visualizations. Setting a seed is crucial for reproducibility, ensuring that you obtain consistent results when running the UMAP algorithm multiple times.

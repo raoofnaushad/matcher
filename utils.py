@@ -59,14 +59,20 @@ def create_embeddings(model, attendees_map, embeddings_path, scale_data=True, sa
     return person_embeddings, scaled_embeddings
 
 
-def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embeddings_path, n_components, save_embeddings=True):
+def dimensionality_reduction(mapped_embeddings, embeddings, dim_red_method, embeddings_path, n_components, save_embeddings=True, random_state=True):
     if dim_red_method == 'UMAP':
         
-        reducer = umap.UMAP(n_neighbors = 15
-                            ,n_components = n_components
-                            ,metric='euclidean'
-                            ,transform_seed = C.RANDOM_STATE
-                            ,random_state=C.RANDOM_STATE)
+        if random_state:
+            reducer = umap.UMAP(n_neighbors = 15
+                                ,n_components = n_components
+                                ,metric='euclidean'
+                                ,transform_seed = C.RANDOM_STATE
+                                ,random_state=C.RANDOM_STATE)
+        else:
+            reducer = umap.UMAP(n_neighbors = 15
+                                ,n_components = n_components
+                                ,metric='euclidean')
+                   
         reduced_data = reducer.fit_transform(embeddings)
 
     pupils = list(mapped_embeddings.keys())
