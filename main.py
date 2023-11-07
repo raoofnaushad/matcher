@@ -3,7 +3,7 @@ import os
 
 import config as C
 import utils as U
-from src import data_comparison
+from src import data_comparison, model_comparison
 
 from sentence_transformers import SentenceTransformer, util
 
@@ -19,7 +19,8 @@ class MatchMaker:
                 dim_reduction_method = 'UMAP',
                 dim_components = 3,
                 plot_title = "Embeddings Plot",
-                plot_path = 'visualization.png'):
+                plot_path = 'visualization.png',
+                candidate = ''):
         
         self._type = _type
         self.data_src = os.path.join(C.BASE_DATA_PATH, file_name)
@@ -28,6 +29,7 @@ class MatchMaker:
         self.dim_reduction_method = dim_reduction_method
         self.plot_title = plot_title
         self.plot_path = os.path.join(C.BASE_RESULTS_PATH, plot_path)
+        self.candidate = candidate
         
         self.model = SentenceTransformer(self.model_src)
         self.mapped_data = U.read_data_from_csv(self.data_src)
@@ -55,23 +57,22 @@ class MatchMaker:
 
         if self._type == 'generate':
             pass
+        
         if self._type == 'data-analysis':
             print(f"Analysing Cosine Similarity for the modified sentences")
-            similarity_metric = data_comparison.compare_modified_vector_embeddings()
+            similarity_metric = data_comparison.compare_modified_vector_embeddings(self.embeddings_path)
 
             print(f"Please see the below cosine similarity analysis")
             for each in similarity_metric:
                 print(f"Similarity metric of the two sentences of {each} is: {similarity_metric[each]}")
             print("-----"*10)
         
+        if self._type == 'embedding-sensitivity':
+            print(f"Runnning Embedding Sensitivity comparing two models")
+            embedding_sensitivity_tests(self.embeddings_path, self.candidate)
+        
 
 if __name__ == "__main__":
-    types = {
-        "generate",
-        "data-analysis",
-        "model-comparison",
-        
-    }
     
     # ## 1. Generate and Visualize ClassMates Data
     # MM = MatchMaker(_type = 'generate', 
@@ -82,21 +83,27 @@ if __name__ == "__main__":
     #                 dim_components = 2,
     #                 plot_title = "MCDA Classmates Embeddings",
     #                 plot_path = 'person_embeddings.png')
+ 
+    #  ## Run It!!!
+    # MM.run()   
     
     
+    # ## 2. Data Analysis - Checking the impact of sentence changes!
+    # MM = MatchMaker(_type = 'data-analysis', 
+    #                 file_name = 'classmates_analysis.csv', 
+    #                 model = C.MINILM_L6_V2, 
+    #                 embeddings_path = 'data_analysis_embeddings.json',
+    #                 dim_reduction_method = 'UMAP',
+    #                 dim_components = 2,
+    #                 plot_title = "Embeddings Analysis",
+    #                 plot_path = 'data_analysis.png')
     
-    ## 2. Data Analysis - Checking the impact of sentence changes!
-    MM = MatchMaker(_type = 'data-analysis', 
-                    file_name = 'classmates_analysis.csv', 
-                    model = C.MINILM_L6_V2, 
-                    embeddings_path = 'data_analysis_embeddings.json',
-                    dim_reduction_method = 'UMAP',
-                    dim_components = 2,
-                    plot_title = "Embeddings Analysis",
-                    plot_path = 'data_analysis.png')
+    # ## Run It!!!
+    # MM.run()
     
-    
-    
-    MM.run()
+    ## 3. Embedding Sensitivity Tests - Compares the embedding produced by multiple models
+    model_comparison.compare_models(C.CLASSMATES_DATA_PATH, C.MINILM_L6_V2, C.MPNET_BASE_V2, "Greg Kirczenow", "model_comparison.png")
+
+
     
     

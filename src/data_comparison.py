@@ -3,10 +3,9 @@ import json
 from sentence_transformers import SentenceTransformer, util
 
 
-def compare_modified_vector_embeddings():
+def compare_modified_vector_embeddings(embeddings_path):
 
-    path = 'results/data_analysis_embeddings.json'
-    data = json.load(open(path))
+    data = json.load(open(embeddings_path))
     candidates = []
     for person in data:
         if 'Modified' in person:
@@ -16,9 +15,7 @@ def compare_modified_vector_embeddings():
     for candidate in candidates:
         candidate_embeddings = []
         for person in data:            
-            # print("---")
             if candidate in person:
-                # print(candidate, person)
                 candidate_embeddings.append(data[person])
           
         candidate_cosine_similarity[candidate] = round(util.cos_sim(candidate_embeddings[0], candidate_embeddings[1]).item()*100, 2)
