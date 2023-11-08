@@ -76,19 +76,19 @@ class MatchMaker:
 
 if __name__ == "__main__":
     
-    # ## 1. Generate and Visualize ClassMates Data
-    # MM = MatchMaker(_type = 'generate', 
-    #                 file_name = 'classmates.csv', 
-    #                 model = C.MINILM_L6_V2, 
-    #                 embeddings_path = 'person_embeddings.json',
-    #                 dim_reduction_method = 'UMAP',
-    #                 dim_components = 2,
-    #                 plot_title = "MCDA Classmates Embeddings",
-    #                 plot_path = 'person_embeddings.png',
-    #                 random_state = True)
+    ## 1. Generate and Visualize ClassMates Data
+    MM = MatchMaker(_type = 'generate', 
+                    file_name = 'classmates.csv', 
+                    model = C.MINILM_L6_V2, 
+                    embeddings_path = 'person_embeddings.json',
+                    dim_reduction_method = 'UMAP',
+                    dim_components = 2,
+                    plot_title = "MCDA Classmates Embeddings",
+                    plot_path = 'person_embeddings.png',
+                    random_state = True)
  
-    #  ## Run It!!!
-    # MM.run()   
+     ## Run It!!!
+    MM.run()   
     
     
     # ## 2. Data Analysis - Checking the impact of sentence changes!
@@ -108,16 +108,16 @@ if __name__ == "__main__":
     # model_comparison.compare_models(C.CLASSMATES_DATA_PATH, C.MINILM_L6_V2, C.MPNET_BASE_V2, "Greg Kirczenow", "model_comparison.png")
 
 
-    ## 4. Generate and Visualize ClassMates Data with no seed
-    MM = MatchMaker(_type = 'generate', 
-                    file_name = 'classmates.csv', 
-                    model = C.MINILM_L6_V2, 
-                    embeddings_path = 'person_embeddings.json',
-                    dim_reduction_method = 'UMAP',
-                    dim_components = 2,
-                    plot_title = "MCDA Classmates Embeddings",
-                    plot_path = 'person_embeddings.png',
-                    random_state = False)
+    # ## 4. Generate and Visualize ClassMates Data with no seed
+    # MM = MatchMaker(_type = 'generate', 
+    #                 file_name = 'classmates.csv', 
+    #                 model = C.MINILM_L6_V2, 
+    #                 embeddings_path = 'person_embeddings.json',
+    #                 dim_reduction_method = 'UMAP',
+    #                 dim_components = 2,
+    #                 plot_title = "MCDA Classmates Embeddings",
+    #                 plot_path = 'person_embeddings.png',
+    #                 random_state = False)
  
-     ## Run It!!!
-    MM.run()   
+    #  ## Run It!!!
+    # MM.run()   
