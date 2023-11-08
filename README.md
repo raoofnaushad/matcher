@@ -43,6 +43,10 @@ We conducted several experiments by crafting modified sentences for five classma
 
 <br>
 
+![Similarity Match After Modifying Sentences](https://github.com/raoofnaushad/matcher/blob/main/results/data_analysis.png?raw=true)
+
+<br>
+
 ![Cosine Similarity Metric](https://github.com/raoofnaushad/matcher/blob/main/results/similarity_metric.png?raw=true)
 
 
