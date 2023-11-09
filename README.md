@@ -6,7 +6,6 @@ A flattened embedding space of names clustered based on their interests using th
 
 ![Sample output of script](https://github.com/raoofnaushad/matcher/blob/main/results/person_embeddings.png?raw=true)
 
-## Packages Used
 
 ### 1. Model for Embeeding Vector Generation
 The Model package used in this project is obtained from the Python package called [SentenceTransformers](https://www.sbert.net/). SentenceTransformers is a Python framework for state-of-the-art sentence, text, and image embeddings. 
@@ -87,3 +86,17 @@ To exemplify this sensitivity, let's take an illustrative case. With the first m
 ![Image 2](https://github.com/raoofnaushad/matcher/blob/main/results/withoutseed2.png?raw=true)
 
 When changing the seed for the UMAP function and rerunning the code, you'll notice variations in the generated visualization (visualization.png). These differences stem from the random weight initialization in the UMAP algorithm. However, despite the visual discrepancies, the relative relationships between vectors remain consistent. For example, individuals like Akash, Mehul, and Francis maintain their proximity in both visualizations. Setting a seed is crucial for reproducibility, ensuring that you obtain consistent results when running the UMAP algorithm multiple times.
+
+### Effect on Random Seed -> After Hyper Parameter Runing
+
+![Image 1](https://github.com/raoofnaushad/matcher/blob/main/results/person_embeddings_umap_best_param1.png?raw=true)
+
+<br>
+
+![Image 2](https://github.com/raoofnaushad/matcher/blob/main/results/person_embeddings_umap_best_param2.png?raw=true)
+
+Upon optimizing hyperparameters, the sensitivity of visualization.png to random seed is noticeably reduced, indicating improved model stability. In the initial visualizations, individuals like Carmen, Abhilash, and Adithya exhibited significant changes across different random seeds. However, with the tuned model, these individuals maintain a more consistent distance and pattern, showcasing enhanced stability.
+
+While the tuned version demonstrates increased stability, it's important to note that complete insensitivity to random seed remains a challenge. Despite optimization efforts, subtle variations persist.
+
+Assessing the tuned model's performance, the UMAP algorithm captures desired patterns more accurately. Individuals' descriptions are mapped with improved context, reflecting a refined representation of the underlying relationships in the data. This underscores the efficacy of hyperparameter optimization in enhancing the algorithm's ability to preserve meaningful patterns during dimension reduction.
